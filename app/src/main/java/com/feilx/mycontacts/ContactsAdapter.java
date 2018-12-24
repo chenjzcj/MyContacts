@@ -86,7 +86,7 @@ public class ContactsAdapter extends BaseAdapter {
             @Override
             public void onPageSelected(int position) {
                 Intent intent = null;
-                mContactslist.mChooseposition = mContactslist.mChooseposition >= persons.size() ? persons.size() - 1 : mContactslist.mChooseposition;
+                mContactslist.mChooseposition = (mContactslist.mChooseposition >= persons.size() && persons.size() > 0) ? persons.size() - 1 : mContactslist.mChooseposition;
                 String number = ContactsAdapter.this.persons.get(mContactslist.mChooseposition).getNumber();
                 switch (position) {
                     //打电话
@@ -127,17 +127,15 @@ public class ContactsAdapter extends BaseAdapter {
         String firstLetter = person.py.substring(0, 1).toUpperCase();
 
         //如果是第1个联系人 那么letterTag始终要显示
+        tvItemLetterTag.setText(firstLetter);
         if (position == 0) {
             tvItemLetterTag.setVisibility(View.VISIBLE);
-            tvItemLetterTag.setText(firstLetter);
         } else {
             //获得上一个姓名的拼音首字母
             String firstLetterPre = this.persons.get(position - 1).getPy().substring(0, 1).toUpperCase();
             //比较一下两者是否相同
             tvItemLetterTag.setVisibility(firstLetter.equals(firstLetterPre) ? View.GONE : View.VISIBLE);
-            tvItemLetterTag.setText(firstLetter);
         }
-
         return convertView;
     }
 

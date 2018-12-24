@@ -22,6 +22,5 @@
     <com.feilx.mycontacts.ItemsViewPager
         android:id="@+id/item_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white" />
+        android:layout_height="50dp" />
 </LinearLayout>

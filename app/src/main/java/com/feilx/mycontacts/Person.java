@@ -12,7 +12,7 @@ public class Person {
     public String name;
 
     /**
-     * 姓名拼音 (花花大神:huahuadashen)
+     * 姓名拼音 (花无缺:huawuque)
      */
     public String py;
     /**
@@ -21,7 +21,7 @@ public class Person {
     public String number;
 
     /**
-     * 中文名首字母 (花花大神:hhds)
+     * 中文名首字母 (花无缺:hwq)
      */
     public String fisrtspell;
 
