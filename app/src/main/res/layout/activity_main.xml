@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/pb_search_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="@drawable/search_bar_edit_pressed"
-        android:drawableLeft="@drawable/pb_search_contacts"
-        android:hint="搜索联系人"
+        android:drawableStart="@drawable/pb_search_contacts"
+        android:hint="@string/search_contacts"
         android:textColor="#000000"
         android:textSize="15sp" />
 
     <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <!-- 自定义的ListView -->
         <huahua.mycontacts.ContactsListView
             android:id="@+id/pb_listvew"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#336598"
-            android:dividerHeight="2dp" />
+            android:divider="#e4e4e4"
+            android:dividerHeight="1dp"
+            android:scrollbars="none" />
 
         <TextView
             android:id="@+id/pb_letter_notice"
@@ -44,10 +48,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="暂无匹配联系人"
-            android:textColor="#000000"
-            android:textSize="28dip"
-            android:visibility="gone" />
+            android:text="@string/no_match_contacts"
+            android:textColor="#564644"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </FrameLayout>
 </LinearLayout>

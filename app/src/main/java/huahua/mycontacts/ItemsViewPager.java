@@ -6,18 +6,31 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
-/*
+/**
  * 自定义左滑打电话,右滑发短信的ViewPager
  */
 public class ItemsViewPager extends ViewPager {
 
-    //记录手指按下时的横坐标。
+    /**
+     * 记录手指按下时的横坐标。
+     */
     private float xDown;
-    //记录手指移动时的横坐标。
+    /**
+     * 记录手指移动时的横坐标。
+     */
     private float xMove;
-    private float yDown;//记录手指按下时的纵坐标。
-    private float yMove;//记录手指移动时的纵坐标。
-    private boolean viewpagersroll = false;//当前是否是viewpager滑动
+    /**
+     * 记录手指按下时的纵坐标。
+     */
+    private float yDown;
+    /**
+     * 记录手指移动时的纵坐标。
+     */
+    private float yMove;
+    /**
+     * 当前是否是viewpager滑动
+     */
+    private boolean viewpagersroll = false;
 
     public ItemsViewPager(Context context) {
         super(context);
@@ -42,7 +55,6 @@ public class ItemsViewPager extends ViewPager {
                 getParent().requestDisallowInterceptTouchEvent(true);
                 return super.dispatchTouchEvent(ev);
             }
-
             //这里的动作判断是Viewpager滑动,ListView不滑动
             if (Math.abs(yMove - yDown) < 5 && Math.abs(xMove - xDown) > 20) {
                 viewpagersroll = true;
@@ -50,13 +62,9 @@ public class ItemsViewPager extends ViewPager {
                 Log.i("huahua", "由父listview来处理滑动效果");
                 return false;
             }
-
         } else if (ev.getAction() == MotionEvent.ACTION_UP) {
             viewpagersroll = false;
         }
-
         return super.dispatchTouchEvent(ev);
     }
-
-
 }

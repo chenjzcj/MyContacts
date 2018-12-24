@@ -17,25 +17,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Felix.Zhong on 2018/12/22 15:20
+ * @author Created by Felix.Zhong on 2018/12/22 15:20
  */
 public class ListAdapter extends BaseAdapter {
-    private ArrayList<Persons> persons;
-    private Context context;
 
-    ListAdapter(Context context, ArrayList<Persons> persons) {
-        this.persons = persons;
+    private List<Person> persons;
+    private Context context;
+    private ContactsListView mContactslist;
+
+    ListAdapter(Context context, List<Person> persons, ContactsListView contactsListView) {
         this.context = context;
+        this.persons = persons;
+        this.mContactslist = contactsListView;
     }
 
     /**
      * 当联系人列表数据发生变化时,用此方法来更新列表
      */
-    public void updateListView(ArrayList<Persons> persons) {
+    public void updateListView(List<Person> persons) {
         this.persons = persons;
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getCount() {
@@ -55,87 +57,83 @@ public class ListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.vp_item, null);
+            convertView = View.inflate(context, R.layout.item_contacts, null);
         }
         List<View> views = new ArrayList<>();
         //将要添加到Viewpager中的3个View
-        @SuppressLint("InflateParams") View view1 = LayoutInflater.from(context).inflate(R.layout.fragment1, null);
-        @SuppressLint("InflateParams") View view2 = LayoutInflater.from(context).inflate(R.layout.list_item, null);
-        @SuppressLint("InflateParams") View view3 = LayoutInflater.from(context).inflate(R.layout.fragment3, null);
-        views.add(view1);
-        views.add(view2);
-        views.add(view3);
+        @SuppressLint("InflateParams") View itemViewCall = LayoutInflater.from(context).inflate(R.layout.item_view_call, null);
+        @SuppressLint("InflateParams") View itemViewMain = LayoutInflater.from(context).inflate(R.layout.item_view_main, null);
+        @SuppressLint("InflateParams") View itemViewSms = LayoutInflater.from(context).inflate(R.layout.item_view_sms, null);
+        views.add(itemViewCall);
+        views.add(itemViewMain);
+        views.add(itemViewSms);
 
-        Persons persons = this.persons.get(position);
+        Person person = this.persons.get(position);
 
-        TextView name = view2.findViewById(R.id.contacts_name);
-        final TextView number = view2.findViewById(R.id.contacts_number);
+        TextView name = itemViewMain.findViewById(R.id.tv_contacts_name);
+        TextView number = itemViewMain.findViewById(R.id.tv_contacts_number);
 
-        name.setText(persons.name);
-        number.setText(persons.number);
+        name.setText(person.getName());
+        number.setText(person.getNumber());
 
         //每个listview的item都是一个Viewpager
-        ItemsViewPager vp = convertView.findViewById(R.id.tabcontent_vp);
+        final ItemsViewPager vp = convertView.findViewById(R.id.tabcontent_vp);
         //给viewpager设置适配器
         vp.setAdapter(new TabAdapter(views));
         //给viewpager设置滑动页监听器
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @SuppressLint("MissingPermission")
             @Override
             public void onPageSelected(int position) {
                 Intent intent = null;
-                String number ="110";// ListAdapter.this.persons.get(mContactslist.mChooseposition).number;
+                String number = ListAdapter.this.persons.get(mContactslist.mChooseposition).getNumber();
                 switch (position) {
                     //打电话
                     case 0:
                         vibrate(context);
-                        intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://" + number));
+                        intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number));
                         break;
                     //发短信
                     case 2:
                         vibrate(context);
-                        intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto://" + number));
+                        intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + number));
                         break;
                     default:
                         break;
                 }
                 if (intent != null) {
                     context.startActivity(intent);
+                    //复原
+                    vp.setCurrentItem(1);
                 }
             }
 
             @Override
-            public void onPageScrollStateChanged(int arg0) {
-
+            public void onPageScrolled(int i, float v, int i1) {
             }
 
             @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-
+            public void onPageScrollStateChanged(int i) {
             }
+
         });
         //第一次加载都是设置的显示第2个页面
         vp.setCurrentItem(1);
 
         //字母提示textview的显示
-        TextView letterTag = convertView.findViewById(R.id.pb_item_LetterTag);
+        TextView tvItemLetterTag = convertView.findViewById(R.id.tv_item_letter_tag);
         //获得当前姓名的拼音首字母
-        String firstLetter = persons.py.substring(0, 1).toUpperCase();
+        String firstLetter = person.py.substring(0, 1).toUpperCase();
 
         //如果是第1个联系人 那么letterTag始终要显示
         if (position == 0) {
-            letterTag.setVisibility(View.VISIBLE);
-            letterTag.setText(firstLetter);
+            tvItemLetterTag.setVisibility(View.VISIBLE);
+            tvItemLetterTag.setText(firstLetter);
         } else {
             //获得上一个姓名的拼音首字母
-            String firstLetterPre = this.persons.get(position - 1).py.substring(0, 1).toUpperCase();
+            String firstLetterPre = this.persons.get(position - 1).getPy().substring(0, 1).toUpperCase();
             //比较一下两者是否相同
-            if (firstLetter.equals(firstLetterPre)) {
-                letterTag.setVisibility(View.GONE);
-            } else {
-                letterTag.setVisibility(View.VISIBLE);
-                letterTag.setText(firstLetter);
-            }
+            tvItemLetterTag.setVisibility(firstLetter.equals(firstLetterPre) ? View.GONE : View.VISIBLE);
+            tvItemLetterTag.setText(firstLetter);
         }
 
         return convertView;
@@ -152,6 +150,4 @@ public class ListAdapter extends BaseAdapter {
             vib.vibrate(50);
         }
     }
-
-
 }

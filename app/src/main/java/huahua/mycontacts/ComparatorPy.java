@@ -7,10 +7,10 @@ import java.util.Comparator;
  *
  * @author Administrator
  */
-public class ComparatorPy implements Comparator<Persons> {
+public class ComparatorPy implements Comparator<Person> {
 
     @Override
-    public int compare(Persons persons1, Persons persons2) {
-        return persons1.py.compareToIgnoreCase(persons2.py);
+    public int compare(Person person1, Person person2) {
+        return person1.py.compareToIgnoreCase(person2.py);
     }
 }
