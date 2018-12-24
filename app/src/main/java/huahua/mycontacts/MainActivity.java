@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
     /**
      * 所有联系人数组
      */
-    private ArrayList<Person> person = new ArrayList<>();
+    private ArrayList<Person> persons = new ArrayList<>();
     /**
      * 搜索过滤联系人EditText
      */
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
         //得到字母列的对象,并设置触摸响应监听器
 
         // 根据拼音为联系人数组进行排序
-        Collections.sort(person, new ComparatorPy());
+        Collections.sort(persons, new ComparatorPy());
 
         //得到联系人列表,并设置适配器
         mContactslist = findViewById(R.id.pb_listvew);
@@ -64,12 +64,12 @@ public class MainActivity extends Activity {
         //初始化搜索编辑框,设置文本改变时的监听器
         mFilteredittext = findViewById(R.id.pb_search_edit);
 
-        mListadapter = new ListAdapter(this, person, mContactslist);
+        mListadapter = new ListAdapter(this, persons, mContactslist);
         mContactslist.setAdapter(mListadapter);
         mContactslist.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, person.get(position).number, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, persons.get(position).number, Toast.LENGTH_LONG).show();
             }
         });
         mFilteredittext.addTextChangedListener(new TextWatcher() {
@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
                     //根据编辑框值过滤联系人并更新联系列表
                     filterContacts(s.toString().trim());
                 } else {
-                    mListadapter.updateListView(person);
+                    mListadapter.updateListView(persons);
                 }
             }
 
@@ -149,7 +149,7 @@ public class MainActivity extends Activity {
                 person.number = cursor.getString(NumberColumn);
                 Log.v("huahua", "名字:" + person.name + "号码:" + person.number + "姓名首字母:" + person.fisrtspell);
 
-                this.person.add(person);
+                this.persons.add(person);
             }
             cursor.close();
         }
@@ -159,18 +159,18 @@ public class MainActivity extends Activity {
         ArrayList<Person> filterpersons = new ArrayList<>();
 
         //遍历所有联系人数组,筛选出包含关键字的联系人
-        for (int i = 0; i < person.size(); i++) {
+        for (int i = 0; i < persons.size(); i++) {
             //过滤的条件
-            if (isStrInString(person.get(i).number, filterStr)
-                    || isStrInString(person.get(i).py, filterStr)
-                    || person.get(i).name.contains(filterStr)
-                    || isStrInString(person.get(i).fisrtspell, filterStr)) {
+            if (isStrInString(persons.get(i).number, filterStr)
+                    || isStrInString(persons.get(i).py, filterStr)
+                    || persons.get(i).name.contains(filterStr)
+                    || isStrInString(persons.get(i).fisrtspell, filterStr)) {
                 //将筛选出来的联系人重新添加到filterpersons数组中
                 Person filterperson = new Person();
-                filterperson.name = person.get(i).name;
-                filterperson.py = person.get(i).py;
-                filterperson.number = person.get(i).number;
-                filterperson.fisrtspell = person.get(i).fisrtspell;
+                filterperson.name = persons.get(i).name;
+                filterperson.py = persons.get(i).py;
+                filterperson.number = persons.get(i).number;
+                filterperson.fisrtspell = persons.get(i).fisrtspell;
                 filterpersons.add(filterperson);
             }
         }
