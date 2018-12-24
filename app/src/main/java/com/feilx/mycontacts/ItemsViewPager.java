@@ -1,4 +1,4 @@
-package huahua.mycontacts;
+package com.feilx.mycontacts;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
@@ -16,17 +16,9 @@ public class ItemsViewPager extends ViewPager {
      */
     private float xDown;
     /**
-     * 记录手指移动时的横坐标。
-     */
-    private float xMove;
-    /**
      * 记录手指按下时的纵坐标。
      */
     private float yDown;
-    /**
-     * 记录手指移动时的纵坐标。
-     */
-    private float yMove;
     /**
      * 当前是否是viewpager滑动
      */
@@ -47,9 +39,10 @@ public class ItemsViewPager extends ViewPager {
             xDown = ev.getRawX();
             yDown = ev.getRawY();
         } else if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-            xMove = ev.getRawX();
-            yMove = ev.getRawY();
-
+            //记录手指移动时的横坐标。
+            float xMove = ev.getRawX();
+            //记录手指移动时的纵坐标。
+            float yMove = ev.getRawY();
             if (viewpagersroll) {
                 Log.i("huahua", "viewpager自己处理滑动效果");
                 getParent().requestDisallowInterceptTouchEvent(true);

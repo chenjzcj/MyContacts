@@ -1,4 +1,4 @@
-package huahua.mycontacts;
+package com.feilx.mycontacts;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import huahua.mycontacts.R;
 
 public class MainActivity extends Activity {
     /**

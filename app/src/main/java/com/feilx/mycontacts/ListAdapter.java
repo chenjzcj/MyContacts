@@ -1,4 +1,4 @@
-package huahua.mycontacts;
+package com.feilx.mycontacts;
 
 import android.annotation.SuppressLint;
 import android.app.Service;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import huahua.mycontacts.R;
 
 /**
  * @author Created by Felix.Zhong on 2018/12/22 15:20
@@ -85,6 +87,7 @@ public class ListAdapter extends BaseAdapter {
             @Override
             public void onPageSelected(int position) {
                 Intent intent = null;
+                mContactslist.mChooseposition = mContactslist.mChooseposition >= persons.size() ? persons.size() - 1 : mContactslist.mChooseposition;
                 String number = ListAdapter.this.persons.get(mContactslist.mChooseposition).getNumber();
                 switch (position) {
                     //打电话

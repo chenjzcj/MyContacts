@@ -1,4 +1,4 @@
-package huahua.mycontacts;
+package com.feilx.mycontacts;
 
 import android.os.Parcelable;
 import android.support.annotation.NonNull;

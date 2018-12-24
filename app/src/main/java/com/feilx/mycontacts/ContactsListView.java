@@ -1,4 +1,4 @@
-package huahua.mycontacts;
+package com.feilx.mycontacts;
 
 import android.content.Context;
 import android.util.AttributeSet;

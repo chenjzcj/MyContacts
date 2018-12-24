@@ -18,7 +18,7 @@
         tools:visibility="visible" />
 
     <!-- 自定义的Viewpager -->
-    <huahua.mycontacts.ItemsViewPager
+    <com.feilx.mycontacts.ItemsViewPager
         android:id="@+id/tabcontent_vp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
