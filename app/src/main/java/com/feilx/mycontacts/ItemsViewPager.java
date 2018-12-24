@@ -44,7 +44,7 @@ public class ItemsViewPager extends ViewPager {
             //记录手指移动时的纵坐标。
             float yMove = ev.getRawY();
             if (viewpagersroll) {
-                Log.i("huahua", "viewpager自己处理滑动效果");
+                Log.i("felix", "viewpager自己处理滑动效果");
                 getParent().requestDisallowInterceptTouchEvent(true);
                 return super.dispatchTouchEvent(ev);
             }
@@ -52,7 +52,7 @@ public class ItemsViewPager extends ViewPager {
             if (Math.abs(yMove - yDown) < 5 && Math.abs(xMove - xDown) > 20) {
                 viewpagersroll = true;
             } else {
-                Log.i("huahua", "由父listview来处理滑动效果");
+                Log.i("felix", "由父listview来处理滑动效果");
                 return false;
             }
         } else if (ev.getAction() == MotionEvent.ACTION_UP) {

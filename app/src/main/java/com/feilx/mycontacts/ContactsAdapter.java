@@ -16,18 +16,18 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import huahua.mycontacts.R;
-
 /**
+ * 联系人数据适配器
+ *
  * @author Created by Felix.Zhong on 2018/12/22 15:20
  */
-public class ListAdapter extends BaseAdapter {
+public class ContactsAdapter extends BaseAdapter {
 
     private List<Person> persons;
     private Context context;
     private ContactsListView mContactslist;
 
-    ListAdapter(Context context, List<Person> persons, ContactsListView contactsListView) {
+    ContactsAdapter(Context context, List<Person> persons, ContactsListView contactsListView) {
         this.context = context;
         this.persons = persons;
         this.mContactslist = contactsListView;
@@ -74,12 +74,11 @@ public class ListAdapter extends BaseAdapter {
 
         TextView name = itemViewMain.findViewById(R.id.tv_contacts_name);
         TextView number = itemViewMain.findViewById(R.id.tv_contacts_number);
-
         name.setText(person.getName());
         number.setText(person.getNumber());
 
         //每个listview的item都是一个Viewpager
-        final ItemsViewPager vp = convertView.findViewById(R.id.tabcontent_vp);
+        final ItemsViewPager vp = convertView.findViewById(R.id.item_viewpager);
         //给viewpager设置适配器
         vp.setAdapter(new TabAdapter(views));
         //给viewpager设置滑动页监听器
@@ -88,7 +87,7 @@ public class ListAdapter extends BaseAdapter {
             public void onPageSelected(int position) {
                 Intent intent = null;
                 mContactslist.mChooseposition = mContactslist.mChooseposition >= persons.size() ? persons.size() - 1 : mContactslist.mChooseposition;
-                String number = ListAdapter.this.persons.get(mContactslist.mChooseposition).getNumber();
+                String number = ContactsAdapter.this.persons.get(mContactslist.mChooseposition).getNumber();
                 switch (position) {
                     //打电话
                     case 0:

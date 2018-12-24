@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:background="#E0E0E0"
         android:paddingEnd="0dp"
-        android:paddingStart="5dp"
+        android:paddingStart="15dp"
         android:visibility="gone"
+        tools:text="A"
         tools:visibility="visible" />
 
     <!-- 自定义的Viewpager -->
     <com.feilx.mycontacts.ItemsViewPager
-        android:id="@+id/tabcontent_vp"
+        android:id="@+id/item_viewpager"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/white" />

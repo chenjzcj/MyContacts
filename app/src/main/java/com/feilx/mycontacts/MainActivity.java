@@ -15,12 +15,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import huahua.mycontacts.R;
 
 public class MainActivity extends Activity {
     /**
@@ -34,7 +31,7 @@ public class MainActivity extends Activity {
     /**
      * 联系人列表的适配器
      */
-    private ListAdapter mListadapter;
+    private ContactsAdapter mListadapter;
     /**
      * 所有联系人数组
      */
@@ -66,12 +63,12 @@ public class MainActivity extends Activity {
         //初始化搜索编辑框,设置文本改变时的监听器
         mFilteredittext = findViewById(R.id.pb_search_edit);
 
-        mListadapter = new ListAdapter(this, persons, mContactslist);
+        mListadapter = new ContactsAdapter(this, persons, mContactslist);
         mContactslist.setAdapter(mListadapter);
         mContactslist.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, persons.get(position).number, Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, persons.get(position).number, Toast.LENGTH_LONG).show();
             }
         });
         mFilteredittext.addTextChangedListener(new TextWatcher() {
@@ -139,7 +136,7 @@ public class MainActivity extends Activity {
         if (cursor != null && cursor.moveToFirst()) {
             int idColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID);
             int displayNameColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            int NumberColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            int numberColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
             while (cursor.moveToNext()) {
                 Person person = new Person();
                 // 获得联系人的ID号
@@ -148,8 +145,8 @@ public class MainActivity extends Activity {
                 person.name = cursor.getString(displayNameColumn);
                 person.py = PinyinUtils.getPingYin(person.name);
                 person.fisrtspell = PinyinUtils.getFirstSpell(person.name);
-                person.number = cursor.getString(NumberColumn);
-                Log.v("huahua", "名字:" + person.name + "号码:" + person.number + "姓名首字母:" + person.fisrtspell);
+                person.number = cursor.getString(numberColumn);
+                Log.v("felix", "名字:" + person.name + "号码:" + person.number + "姓名首字母:" + person.fisrtspell);
 
                 this.persons.add(person);
             }
