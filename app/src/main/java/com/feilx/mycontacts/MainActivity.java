@@ -75,9 +75,10 @@ public class MainActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!"".equals(s.toString().trim())) {
+                String key = s.toString().trim();
+                if (!"".equals(key)) {
                     //根据编辑框值过滤联系人并更新联系列表
-                    filterContacts(s.toString().trim());
+                    filterContacts(key);
                 } else {
                     mListadapter.updateListView(persons);
                 }
@@ -139,15 +140,12 @@ public class MainActivity extends Activity {
             int numberColumn = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
             while (cursor.moveToNext()) {
                 Person person = new Person();
-                // 获得联系人的ID号
-                String contactId = cursor.getString(idColumn);
-                // 获得联系人姓名
-                person.name = cursor.getString(displayNameColumn);
-                person.py = PinyinUtils.getPingYin(person.name);
-                person.fisrtspell = PinyinUtils.getFirstSpell(person.name);
-                person.number = cursor.getString(numberColumn);
-                Log.v("felix", "名字:" + person.name + "号码:" + person.number + "姓名首字母:" + person.fisrtspell);
-
+                person.setContactId(cursor.getString(idColumn));
+                person.setName(cursor.getString(displayNameColumn));
+                person.setPy(PinyinUtils.getPingYin(person.name));
+                person.setFisrtspell(PinyinUtils.getFirstSpell(person.name));
+                person.setNumber(cursor.getString(numberColumn));
+                Log.i("felix", person.toString());
                 this.persons.add(person);
             }
             cursor.close();

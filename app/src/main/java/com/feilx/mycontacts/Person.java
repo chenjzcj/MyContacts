@@ -7,7 +7,12 @@ package com.feilx.mycontacts;
  */
 public class Person {
     /**
-     * 姓名
+     * 联系人的ID号
+     */
+    public String contactId;
+
+    /**
+     * 联系人姓名
      */
     public String name;
 
@@ -28,11 +33,20 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
+                "contactId='" + contactId + '\'' +
+                ", name='" + name + '\'' +
                 ", py='" + py + '\'' +
                 ", number='" + number + '\'' +
                 ", fisrtspell='" + fisrtspell + '\'' +
                 '}';
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
     }
 
     public String getName() {
